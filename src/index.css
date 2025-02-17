@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Poppins-Regular';
+  src: local("Poppins-Regular"),
+  url('./fonts/Poppins-Regular.ttf') format("truetype");
+}
+
+@font-face {
+  font-family: 'Poppins-Light';
+  src: local("Poppins-Light"),
+  url('./fonts/Poppins-Light.ttf') format("truetype");
+}
+
+@font-face {
+  font-family: 'Poppins-Bold';
+  font-weight: bold;
+  src: local("Poppins-Bold"),
+  url('./fonts/Poppins-Bold.ttf') format("truetype");
+}
+
+@theme {
+  --font-poppinsRegular: 'Poppins-Regular';
+  --font-poppinsLight: 'Poppins-Light';
+  --font-poppinsBold: 'Poppins-Bold';
+}
+
+* {
+  font-family: var(--font-poppinsRegular);
+}
