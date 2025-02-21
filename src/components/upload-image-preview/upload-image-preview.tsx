@@ -9,6 +9,8 @@ interface IUploadImagePreview {
     onDelete: () => void;
     onUpdate: (image: TImage) => void;
     selectPrevisualizeEnabled: boolean;
+    mode?: "edit" | "view";
+    eventType: "public" | "private";
 }
 
 const UploadImagePreview = ({
@@ -16,20 +18,35 @@ const UploadImagePreview = ({
     onDelete,
     onUpdate,
     selectPrevisualizeEnabled = false,
+    mode = "edit",
+    eventType
 }: IUploadImagePreview) => {
     const [previsualizeOpened, setPrevisualizeOpened] = React.useState(false);
+    const [imageSrc, setImageSrc] = React.useState<string | ArrayBuffer | null>(null);
+
+    React.useEffect(() => {
+        if (image && !image.webContentLink) {
+            const reader = new FileReader();
+
+            reader.onload = () => setImageSrc(reader.result);
+
+            reader.readAsDataURL(image.file)
+        }
+    }, [image]);
+
 
     return (
         <>
             {!image && <Skeleton active />}
             {image && (
-                <div className="flex flex-row gap-x-2 w-full rounded-lg shadow-lg p-4">
+                <div className="flex flex-row gap-x-2 w-full rounded-lg shadow-[0px_0px_6px_0px_rgba(0,_0,_0,_0.1)] p-4">
                     <div className="flex flex-row items-start">
                         <img
                             onClick={() => setPrevisualizeOpened(true)}
                             className="w-12 cursor-pointer"
-                            src={image.base64}
+                            src={imageSrc as string || image.webContentLink}
                             alt="Event image"
+                            referrerPolicy="no-referrer"
                         />
                     </div>
                     <div className="flex flex-col gap-y-2">
@@ -45,6 +62,7 @@ const UploadImagePreview = ({
                                     description: e.target.value,
                                 })
                             }
+                            disabled={mode === "view" || eventType === "private"}
                         />
                         <div className="flex items-center">
                             <span className="basis-[10%] text-center">$</span>
@@ -60,6 +78,7 @@ const UploadImagePreview = ({
                                     })
                                 }
                                 className="w-12"
+                                disabled={mode === "view" || eventType === "private"}
                             />
                         </div>
 
@@ -67,25 +86,25 @@ const UploadImagePreview = ({
                             <div className="flex flex-row items-center">
                                 <Checkbox
                                     disabled={!selectPrevisualizeEnabled}
-                                    checked={image.isImagePreview}
+                                    checked={image.isEventPreview}
                                     onChange={(e) =>
                                         onUpdate({
                                             ...image,
-                                            isImagePreview: e.target.checked,
+                                            isEventPreview: e.target.checked,
                                         })
                                     }
                                 >
                                     Previsualizar
                                 </Checkbox>
-                                <Tooltip title="Es la imágen que se utilizará para representar el evento en el listado de eventos.">
+                                <Tooltip title="Es la imagen que se utilizará para representar el evento en el listado de eventos.">
                                     <InfoCircleOutlined />
                                 </Tooltip>
                             </div>
-                            <DeleteOutlined
+                            { mode === "edit" && <DeleteOutlined
                                 className="cursor-pointer rounded-full p-2 bg-red-400"
                                 style={{ color: "white" }}
                                 onClick={onDelete}
-                            />
+                            />}
                         </div>
                     </div>
                 </div>
@@ -93,7 +112,7 @@ const UploadImagePreview = ({
 
             {previsualizeOpened && (
                 <PrevisualizeImageModal
-                    imageSrc={image.base64}
+                    imageSrc={imageSrc as string || image.webContentLink || ''}
                     onClose={() => setPrevisualizeOpened(false)}
                 />
             )}

@@ -6,6 +6,7 @@ interface ICategoriesSelect {
     onChange: (value: string) => void;
     categoryGroupId: string;
     disabled?: boolean;
+    value: string;
 }
 
 type TSelectOption = {
@@ -18,10 +19,9 @@ type TCategoryGroup = {
     name: string;
 }
 
-const CategoriesSelect = ({ onChange, categoryGroupId, disabled }: ICategoriesSelect) => {
+const CategoriesSelect = ({ onChange, categoryGroupId, disabled, value }: ICategoriesSelect) => {
     const [categories, setCategories] = React.useState<TSelectOption[]>([]);
     const { data, fetchData } = useService();
-    const [value, setValue] = React.useState<string>('');
     const [loading, setLoading] = React.useState(false);
 
     const fetchCategoriesData = async () => {
@@ -33,7 +33,6 @@ const CategoriesSelect = ({ onChange, categoryGroupId, disabled }: ICategoriesSe
     }
 
     React.useEffect(() => {
-        setValue('');
         setCategories([]);
         setLoading(true);
     }, [categoryGroupId]);
@@ -55,12 +54,11 @@ const CategoriesSelect = ({ onChange, categoryGroupId, disabled }: ICategoriesSe
     }, [data]);
 
     const handleChange = (value: string) => {
-        setValue(value);
         onChange(value);
     }
 
     return (
-        <Select loading={loading && !!Number(categoryGroupId)} value={value || null} disabled={disabled} placeholder="Tipo de evento*" options={categories} onChange={handleChange}/>
+        <Select loading={loading && !!Number(categoryGroupId)} value={value} disabled={disabled} placeholder="Tipo de evento*" options={categories} onChange={handleChange}/>
     )
 }
 

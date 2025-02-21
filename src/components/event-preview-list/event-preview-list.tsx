@@ -6,6 +6,8 @@ interface IEventPreviewList {
     filterSelected: string;
     events: TEvent[];
     onSelectedFilter: (event: string) => void;
+    onDelete: (event: TEvent) => void;
+    onUpdate: (event: TEvent) => void;
 }
 
 const orderOptions = [
@@ -39,19 +41,28 @@ const EventPreviewList = ({
     filterSelected,
     events,
     onSelectedFilter,
+    onDelete,
+    onUpdate
 }: IEventPreviewList) => {
     return (
         <div className="flex flex-col items-center gap-y-4">
-                <Select
-                    options={orderOptions}
-                    defaultValue={filterSelected ? filterSelected : orderOptions[1].value}
-                    onChange={onSelectedFilter}
-                />
+            <Select
+                options={orderOptions}
+                defaultValue={filterSelected ? filterSelected : orderOptions[1].value}
+                onChange={onSelectedFilter}
+                disabled={!events.length}
+            />
             {
-                events &&
+                !!events.length &&
                 events.map((event, index) => (
-                    <EventPreviewCard key={index} event={event} />
-                ))}
+                    <EventPreviewCard onDelete={onDelete} onUpdate={onUpdate} key={index} event={event} />
+                ))
+            }
+
+            {
+                !events.length &&
+                <p className="text-center">No hay eventos</p>
+            }
         </div>
     );
 };

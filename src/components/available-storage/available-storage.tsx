@@ -19,10 +19,10 @@ const AvailableStorage = () => {
         <div className='flex flex-row flex-wrap justify-between'>
             <span className='font-poppinsBold text-sm basis-full'>Almacenamiento en Drive</span>
             <span className='font-poppinsLight text-xs basis-full'>Cuenta: {loginData?.email}</span>
-            <Progress status={percent > 80 ? 'exception' : 'normal'} percent={percent} />
-            <span className='font-poppinsLight text-xs'>Usado: {driveData?.usage} GB</span>
-            <span className='font-poppinsLight text-xs'>Disponible: {driveData?.availableSpace} GB</span>
-            <span className='font-poppinsLight text-xs'>Limite: {driveData?.limit} GB</span>
+            <Progress status={percent > 80 ? 'exception' : 'normal'} percent={Number(percent.toFixed(2))} />
+            <span className='font-poppinsLight text-xs'>Usado: {driveData?.usage.toFixed(2)} GB</span>
+            <span className='font-poppinsLight text-xs'>Disponible: {driveData?.availableSpace.toFixed(2)} GB</span>
+            <span className='font-poppinsLight text-xs'>Limite: {driveData?.limit.toFixed(2)} GB</span>
             {percent > 80 && percent < 100 && <span className='font-poppinsLight mt-2 basis-full text-xs text-red-500'>Tu almacenamiento esta por llenarse, considera eliminar eventos para liberar espacio.</span>}
             {percent === 100 && <span className='font-poppinsLight mt-2 basis-full text-xs text-red-500'>Tu almacenamiento esta lleno, elimina eventos para liberar espacio.</span>}
         </div>

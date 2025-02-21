@@ -40,31 +40,39 @@ const QueryRecord: TQueryRecord = {
     }
 }
 
+interface IMainSection {
+    onUpdate: (event: TEvent) => void;
+    onDelete: (event: TEvent) => void;
+}
 
-const MainSection = () => {
+
+const MainSection = ({ onUpdate, onDelete }: IMainSection) => {
     const [loading, setLoading] = React.useState(true);
     const [selectedFilter, setSelectedFilter] = React.useState<string>("");
     const { events, setEvents } = useGlobal();
     const { data, fetchData } = useService();
 
     React.useEffect(() => {
-        if (!events) {
-            fetchData({
-                api: "events",
-                method: "GET",
-                params: {
-                    "order-by": 'creation_date',
-                    "order": 'desc'
-                },
-            });
-        }
+        fetchData({
+            api: "events",
+            method: "GET",
+            params: {
+                "order-by": 'creation_date',
+                "order": 'desc'
+            },
+        });
     }, []);
 
     React.useEffect(() => {
+        console.log(data);
         if (data?.code === 200) {
             setLoading(false);
-            console.log(data.data);
             setEvents(data.data as TEvent[]);
+        }
+
+        if (data?.code === 204) {
+            setLoading(false);
+            setEvents([]);
         }
     }, [data]);
 
@@ -80,17 +88,17 @@ const MainSection = () => {
         }
     }
 
+    
+
     return (
-        <section className="mt-4 p-4">
+        <section className="mt-4 p-4 flex flex-col">
             {loading && <Skeleton active />}
-            {loading && <Skeleton active />}
-            {!loading && !events && <span>No hay eventos</span>}
 
             {!loading && events && <Collapse items={[
                 {
                     key: 'events',
                     label: 'Eventos registrados',
-                    children: <EventPreviewList filterSelected={selectedFilter} events={events || []} onSelectedFilter={onFilterChange}/>
+                    children: <EventPreviewList onUpdate={onUpdate} onDelete={onDelete} filterSelected={selectedFilter} events={events || []} onSelectedFilter={onFilterChange}/>
                 }
             ]}/>}
 

@@ -1,5 +1,3 @@
-
-
 export type TUserLoginData = {
     id: number,
     username: string,
@@ -29,6 +27,7 @@ export type TEvent = {
     creation_date: string;
     event_type_id: number;
     event_category_id: number;
+    event_category_group_id: number;
     totalImages: number;
     eventPreviewImage: string;
     numberOfDaysSinceCreation: number;
@@ -38,6 +37,7 @@ export type TEvent = {
  * Event created from front
  */
 export type TEventRaw = {
+    event_id?: number;
     name: string;
     date: string;
     country: string;
@@ -48,12 +48,36 @@ export type TEventRaw = {
     event_password: string;
     event_type_id: number;
     event_category_id: number;
+    event_category_group_id: number;
     images: TImage[]
 }
 
 export type TImage = {
     description: string;
     price: number;
-    isImagePreview: boolean;
-    base64: string;
+    isEventPreview: boolean;
+    file: File;
+    originalFileName: string;
+    isWatermarked?: boolean;
+    event_id?: number;
+    picture_id?: number;
+    webContentLink?: string;
 }
+
+export type TImageResponse = {
+    event_id: number;
+    picture_id: number;
+    description: string;
+    price: number;
+    webContentLink: string;
+    isWatermarked: boolean;
+}
+
+
+export type TFile = {
+    name: string;
+    size: string;
+    mimeType: string;
+    webContentLink: string;
+    totalImages: string;
+};

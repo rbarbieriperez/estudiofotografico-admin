@@ -1,57 +1,58 @@
-import { InboxOutlined } from "@ant-design/icons";
+import { InboxOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { TImage } from "../../types/types";
-import { Upload } from "antd";
+import { Upload, Input, Tooltip } from 'antd';
 import { RcFile } from "antd/es/upload";
 import UploadImagePreview from "../upload-image-preview/upload-image-preview";
 import React from "react";
 import { UploadProps, UploadRef } from "antd/es/upload/Upload";
 
 interface IUploadImages {
-    images: TImage[];
+    value: TImage[];
     onChange: (images: TImage[]) => void;
+    eventType: 'public' | 'private';
+
 }
 
-const UploadImages = ({ images, onChange }: IUploadImages) => {
-    const uploadRef = React.createRef<UploadRef<UploadProps>>();
 
-    const getBase64 = (file: RcFile) => {
-        return new Promise((resolve, _) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = () => resolve(false);
-        });
-    }
+const UploadImages = ({ value, onChange, eventType }: IUploadImages) => {
+    const uploadRef = React.createRef<UploadRef<UploadProps>>();
 
     const handleChange = async (file: RcFile, fileList: RcFile[]) => {
             console.log('handleChange', fileList);
-            const _images: TImage[] = [...images];
+            const _images: TImage[] = [...value];
             for (const file of fileList) {
-                const base64 = await getBase64(file);
-                if (base64) {
-                    _images.push({
-                        description: '',
-                        price: 0,
-                        isImagePreview: false,
-                        base64: base64 as string,
-                    });
-                }
+                _images.push({
+                    description: '',
+                    price: 0,
+                    isEventPreview: _images.length === 0,
+                    originalFileName: file.name,
+                    file,
+                });
             }
             onChange(_images);
             return false;
     };
 
     const handleUpdate = (image: TImage, index: number) => {
-        const newImages = [...images];
+        const newImages = [...value];
         newImages[index] = image;
         onChange(newImages);
     };
     
     const handleDelete = (index: number) => {
-        const newImages = [...images];
+        const newImages = [...value];
         newImages.splice(index, 1);
         onChange(newImages);
     };
+
+    const handleSetGeneralPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value) {
+            const price = Number(e.target.value);
+            const newImages = [...value];
+            newImages.forEach(image => image.price = price);
+            onChange(newImages);
+        }
+    }
 
     return (
         <>
@@ -65,7 +66,6 @@ const UploadImages = ({ images, onChange }: IUploadImages) => {
                 showUploadList={false}
                 multiple
                 action={""}
-                
             >
                 <p className="ant-upload-drag-icon">
                     <InboxOutlined />
@@ -75,18 +75,38 @@ const UploadImages = ({ images, onChange }: IUploadImages) => {
                 </p>
             </Upload.Dragger>
 
-            <div className="flex flex-col gap-y-10">
-                {images.length && (
-                    images.map((image, index) => (
+            <div className="flex flex-col gap-y-10 mt-6">
+                {eventType === 'public' && !!value.length && <div className="flex flex-wrap flex-row gap-2 items-center justify-center">
+                    <p className="basis-full text-center">Precio general</p>
+                    <span>$</span>
+                    <Input
+                        className="basis-[40%]"
+                        type="number"
+                        placeholder="Precio general"
+                        onChange={handleSetGeneralPrice}
+                        defaultValue={0}
+                        min={0}
+
+                        suffix={
+                            <Tooltip title="El precio general se aplica a todas las imagenes.">
+                              <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+                            </Tooltip>
+                          }
+                    />
+                </div>}
+
+                {
+                    Array.isArray(value) && value.length ? value.map((image, index) => (
                         <UploadImagePreview
+                            eventType={eventType}
                             key={index}
                             image={image}
-                            selectPrevisualizeEnabled={!images.find((img) => img.isImagePreview) || image.isImagePreview}
+                            selectPrevisualizeEnabled={!value.find((img) => img.isEventPreview) || image.isEventPreview}
                             onDelete={() => handleDelete(index)}
                             onUpdate={(img) => handleUpdate(img, index)}
                         />
-                    ))
-                )}
+                    )
+                ) : null}
             </div>
         </>
     );

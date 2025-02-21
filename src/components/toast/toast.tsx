@@ -1,9 +1,19 @@
+import { useEffect } from "react";
 import { useGlobal } from "../../hooks/useGlobal";
 import { Alert } from 'antd';
 
 const Toast = () => {
     const { toast, closeToast } = useGlobal();
 
+    
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            closeToast();
+        }, toast?.timeout || 3000);
+        
+        return () => clearTimeout(timer);
+    }, [toast]);
+    
     if (!toast) return null;
 
     return (

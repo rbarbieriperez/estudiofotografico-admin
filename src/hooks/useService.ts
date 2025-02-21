@@ -19,7 +19,7 @@ const useService = () => {
     const fetchData = async ({
         api,
         method,
-        body,
+        body = null,
         headers = {},
         params = {},
     }: IUseService) => {
@@ -34,9 +34,9 @@ const useService = () => {
                 headers: {
                     ...headers,
                     ...({Authorization: `Bearer ${token}`}),
-                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify(body),
+                //body: JSON.stringify(body),
+                body: body as unknown as any
             }
         ).then((res) => {
             if (res.status === 401) {
@@ -47,7 +47,7 @@ const useService = () => {
         }).then(async (res) => {
             setData({
                 code: res.status,
-                data: await res.json(),
+                data: res.status === 204 ? null : await res.json(),
             });
         }).catch(() => {
             setData({

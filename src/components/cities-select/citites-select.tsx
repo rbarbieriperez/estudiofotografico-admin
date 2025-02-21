@@ -58,10 +58,6 @@ const CitiesSelect = ({countryId, departmentId, onChange, value}: ICitiesSelect)
             fetchCities();
         }
     }, [cities]);
-    
-    React.useEffect(() => {
-        console.log('city changed', value);
-    }, [value]);
 
     return (
         <Select

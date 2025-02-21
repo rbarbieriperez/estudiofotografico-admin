@@ -1,5 +1,6 @@
 import { MenuOutlined } from "@ant-design/icons";
 import AvailableStorage from "../available-storage/available-storage";
+import EventUploadProgressStatus from "../event-upload-progress-status/event-upload-progress-status";
 
 interface IHeader {
     openMenu: () => void;
@@ -12,6 +13,7 @@ const Header = ({openMenu}: IHeader) => {
             <MenuOutlined onClick={openMenu} role="button" className="basis-full cursor-pointer"/>
             <hr className="border-b-[1px] border-gray-200"/>
             <AvailableStorage/>
+            <EventUploadProgressStatus/>
         </header>
     )
 };

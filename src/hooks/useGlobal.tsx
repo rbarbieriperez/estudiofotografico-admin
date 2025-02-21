@@ -4,6 +4,7 @@ import { TDriveData, TEvent, TUserLoginData } from "../types/types";
 type TToast = {
     variant: 'error' | 'success';
     message: string;
+    timeout?: number;
 }
 
 type TGlobalContext = {
@@ -18,6 +19,8 @@ type TGlobalContext = {
     setLoginData: React.Dispatch<React.SetStateAction<TUserLoginData | undefined>>;
     events: TEvent[] | undefined;
     setEvents: React.Dispatch<React.SetStateAction<TEvent[] | undefined>>;
+    taskInProgress: Boolean;
+    setTaskInProgress: React.Dispatch<React.SetStateAction<Boolean>>
 }
 
 const GlobalContext = React.createContext<TGlobalContext>({} as TGlobalContext);
@@ -28,6 +31,7 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
     const [driveData, setDriveData] = React.useState<TDriveData>();
     const [loginData, setLoginData] = React.useState<TUserLoginData>();
     const [events, setEvents] = React.useState<TEvent[]>();
+    const [taskInProgress, setTaskInProgress] = React.useState<Boolean>(false);
 
     /**
      * Show Toast
@@ -45,7 +49,7 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
 
     
     return (
-        <GlobalContext.Provider value={{ loading, setLoading, showToast, toast, closeToast, driveData, setDriveData, loginData, setLoginData, events, setEvents }}>
+        <GlobalContext.Provider value={{ loading, setLoading, showToast, toast, closeToast, driveData, setDriveData, loginData, setLoginData, events, setEvents, taskInProgress, setTaskInProgress }}>
             {children}
         </GlobalContext.Provider>
     )

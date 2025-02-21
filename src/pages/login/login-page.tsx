@@ -40,10 +40,10 @@ const LoginPage = ({ onLogin }:ILoginPage) => {
             await fetchData({
                 api: 'login',
                 method: 'POST', 
-                body: {
+                body: JSON.stringify({
                     username: event.username,
                     password: event.password
-                },
+                }),
                 headers: {
                     'Content-Type': 'application/json'
                 }

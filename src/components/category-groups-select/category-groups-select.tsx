@@ -4,6 +4,7 @@ import { Select } from "antd";
 
 interface ICategoryGroupsSelect {
     onChange: (value: string) => void;
+    value: string;
 }
 
 type TSelectOption = {
@@ -16,7 +17,7 @@ type TCategoryGroup = {
     name: string;
 }
 
-const CategoryGroupsSelect = ({ onChange }: ICategoryGroupsSelect) => {
+const CategoryGroupsSelect = ({ onChange, value }: ICategoryGroupsSelect) => {
     const [categoryGroups, setCategoryGroups] = React.useState<TSelectOption[]>([]);
     const { data, fetchData } = useService();
 
@@ -43,7 +44,7 @@ const CategoryGroupsSelect = ({ onChange }: ICategoryGroupsSelect) => {
     }, [data]);
 
     return (
-        <Select placeholder="Categoría*" options={categoryGroups} onChange={onChange}/>
+        <Select value={value} placeholder="Categoría*" options={categoryGroups} onChange={onChange}/>
     )
 }
 

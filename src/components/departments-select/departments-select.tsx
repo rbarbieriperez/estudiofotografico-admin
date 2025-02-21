@@ -14,12 +14,6 @@ type TSelectOption = {
     label: string;
 };
 
-
-type TParsedLocation = {
-    name: string;
-    id: string;
-};
-
 type TDepartment = { tags: { [key: string]: string }; id: number };
 
 
@@ -28,7 +22,6 @@ const DepartmentsSelect = ({countryId, onChange, disabled, value}: IDepartmentsS
         TSelectOption[]
     >([]);
     const [loading, setLoading] = React.useState(true);
-
     const fetchDepartments = async () => {
         try {
             setLoading(true);
@@ -64,11 +57,9 @@ const DepartmentsSelect = ({countryId, onChange, disabled, value}: IDepartmentsS
 
     React.useEffect(() => {
         if (!departmentsOptions.length) {
-            console.log('fetching departments');
             fetchDepartments();
         }
     }, [departmentsOptions]);
-
 
     return <Select
         showSearch
@@ -78,7 +69,7 @@ const DepartmentsSelect = ({countryId, onChange, disabled, value}: IDepartmentsS
         options={departmentsOptions}
         onChange={onChange}
         value={value}
-        disabled={disabled}
+        disabled={disabled || loading}
     />
 };
 

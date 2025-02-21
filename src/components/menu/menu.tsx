@@ -13,8 +13,8 @@ const items: TMenuItem[] = [
         icon: '',
         children: [
             { key: 'public-events-add', label: 'Nuevo evento', icon: <PlusSquareOutlined /> },
-            { key: 'public-event-update', label: 'Modificar evento', icon: <EditOutlined />},
-            { key: 'public-event-delete', label: 'Eliminar evento', icon: <DeleteOutlined />},
+            { key: 'public-events-update', label: 'Modificar evento', icon: <EditOutlined />},
+            { key: 'public-events-delete', label: 'Eliminar evento', icon: <DeleteOutlined />},
         ]
     },
     {
@@ -23,8 +23,8 @@ const items: TMenuItem[] = [
         icon: '',
         children: [
             { key: 'private-events-add', label: 'Nuevo evento', icon: <PlusSquareOutlined /> },
-            { key: 'private-event-update', label: 'Modificar evento', icon: <EditOutlined />},
-            { key: 'private-event-delete', label: 'Eliminar evento', icon: <DeleteOutlined />},
+            { key: 'private-events-update', label: 'Modificar evento', icon: <EditOutlined />},
+            { key: 'private-events-delete', label: 'Eliminar evento', icon: <DeleteOutlined />},
         ]
     }
 ];
@@ -33,9 +33,10 @@ interface IMenu {
     opened: boolean;
     onVeilClick: () => void;
     onMenuClick: (option: string) => void;
+    selectedKey: string;
 }
 
-const MenuResponsive = ({ opened, onVeilClick, onMenuClick }: IMenu) => {
+const MenuResponsive = ({ opened, onVeilClick, onMenuClick, selectedKey }: IMenu) => {
 
     const onClick: MenuProps['onClick'] = (e) => {
         onVeilClick();
@@ -43,12 +44,12 @@ const MenuResponsive = ({ opened, onVeilClick, onMenuClick }: IMenu) => {
     };
     
 
-    return opened && <div className="fixed w-full h-full">
+    return opened && <div className="fixed w-full h-full z-1000">
         <div className="flex flex-col gap-y-2 py-3 z-1000 absolute bottom-0 left-0 w-full bg-white">
             <hr className="border-b-[2px] w-[5rem] m-auto border-gray-200"/>
             <Menu
                 className=""
-                defaultSelectedKeys={['dashboard']}
+                defaultSelectedKeys={[selectedKey]}
                 mode="inline"
                 items={items}
                 onClick={onClick}
