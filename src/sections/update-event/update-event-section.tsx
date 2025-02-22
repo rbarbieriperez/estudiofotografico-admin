@@ -68,7 +68,7 @@ const UpdateEventSection = ({
                 api: `events/${eventId}/images`,
                 method: 'GET',
                 params: {
-                    'event-type': 'private'
+                    ...(eventType === 'public' ? {} : {'event-type': 'private'})
                 }
             });
         } catch (error) {

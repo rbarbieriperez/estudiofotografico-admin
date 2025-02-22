@@ -18,12 +18,12 @@ const EventPreviewInformation = ({ event, images }: IEventPreviewInformation) =>
       <p>Tipo de evento: {event.event_type_id === 1 ? "Publico" : "Privado"}</p>
       { event.event_user && <p>Usuario: {event.event_user}</p> }
       { event.event_password && <p>Contraseña: {event.event_password}</p> }
-      <p>Imagenes: {event.totalImages}</p>
+      <p>Imagenes: {event.total_images}</p>
 
       <div>
           <p className="text-center font-poppinsBold!">Imagenes</p>
           { images.map((image, index) => <div className="flex mt-4" key={`image-${index}`}>
-              <UploadImagePreview mode="view" image={image} onDelete={() => {}} onUpdate={() => {}} selectPrevisualizeEnabled={false}/>
+              <UploadImagePreview eventType={"public"} mode="view" image={image} onDelete={() => {}} onUpdate={() => {}} selectPrevisualizeEnabled={false}/>
           </div>) }
       </div>
   </div>

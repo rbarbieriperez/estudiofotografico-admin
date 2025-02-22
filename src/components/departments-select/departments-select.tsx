@@ -64,7 +64,7 @@ const DepartmentsSelect = ({countryId, onChange, disabled, value}: IDepartmentsS
     return <Select
         showSearch
         optionFilterProp="label"
-        placeholder="Departamentos*"
+        placeholder="Departamento*"
         loading={loading}
         options={departmentsOptions}
         onChange={onChange}

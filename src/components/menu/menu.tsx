@@ -19,7 +19,8 @@ const items: TMenuItem[] = [
     },
     {
         key: 'private-events',
-        label: 'Eventos privados',
+        label: 'Eventos privados - Proximamente',
+        disabled: true,
         icon: '',
         children: [
             { key: 'private-events-add', label: 'Nuevo evento', icon: <PlusSquareOutlined /> },

@@ -62,7 +62,7 @@ const CitiesSelect = ({countryId, departmentId, onChange, value}: ICitiesSelect)
     return (
         <Select
             showSearch
-            placeholder="Ciudad"
+            placeholder="Ciudad*"
             optionFilterProp="label"
             onChange={onChange}
             loading={loading && !!departmentId && !!countryId}

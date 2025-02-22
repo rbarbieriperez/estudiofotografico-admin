@@ -28,7 +28,7 @@ export type TEvent = {
     event_type_id: number;
     event_category_id: number;
     event_category_group_id: number;
-    totalImages: number;
+    total_images: number;
     eventPreviewImage: string;
     numberOfDaysSinceCreation: number;
 }
@@ -62,6 +62,7 @@ export type TImage = {
     event_id?: number;
     picture_id?: number;
     webContentLink?: string;
+    isNewImage?: Boolean;
 }
 
 export type TImageResponse = {

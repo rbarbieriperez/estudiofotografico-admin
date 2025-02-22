@@ -80,7 +80,7 @@ const EventDataForm = ({
                     value={event.department || ''}
                     onChange={(e) => {
                         onChange({ ...event, department: e, city: '' });
-                        formInstance.setFieldsValue({ city: '' });
+                        formInstance.setFieldsValue({ city: null })
                     }}
                 />
             </Form.Item>
@@ -98,7 +98,7 @@ const EventDataForm = ({
                 <CitiesSelect
                     countryId={event.country}
                     departmentId={event.department}
-                    value={event.city}
+                    value={event.city || ''}
                     onChange={(e) => onChange({ ...event, city: e })}
                 />
             </Form.Item>

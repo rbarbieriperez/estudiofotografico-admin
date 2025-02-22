@@ -18,7 +18,7 @@ const EventPreviewCard = ({ event, onDelete, onUpdate }: IEventPreviewCard) => {
         <span className='font-poppinsLight text-sm'>Fecha: {new Date(event.date).toLocaleDateString()}</span>
         <span className='font-poppinsLight text-sm'>Lugar: {event.city}, {event.department}, {event.country}</span>
         <span className='font-poppinsLight text-sm'>Creado hace: {event.numberOfDaysSinceCreation} días</span>
-        <span className='font-poppinsLight text-sm'>Imagenes: {event.totalImages}</span>
+        <span className='font-poppinsLight text-sm'>Imagenes: {event.total_images}</span>
 
         <div className='w-full flex gap-x-4 mt-3'>
             <Icon className='cursor-pointer p-2 bg-blue-400 rounded-full' onClick={() => onUpdate(event)} component={EditOutlined}/>
