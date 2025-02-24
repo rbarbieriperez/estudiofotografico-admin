@@ -14,7 +14,7 @@ type TStatus = {
 
 const EventUploadProgressStatus = () => {
   const [status, setStatus] = React.useState<TStatus>();
-  const {setTaskInProgress} = useGlobal();
+  const {setTaskInProgress, setShouldRefresh} = useGlobal();
 
 
   React.useEffect(() => {
@@ -23,6 +23,11 @@ const EventUploadProgressStatus = () => {
     socket.onmessage = (event) => {
       console.log('socket message', event);
       setStatus(JSON.parse(event.data) as TStatus);
+
+      if (['completed', 'failed'].includes(status?.status || '')) {
+        setTaskInProgress(false);
+        setShouldRefresh(true);
+      }
     }
   }, []);
 
@@ -42,10 +47,6 @@ const EventUploadProgressStatus = () => {
     setStatus(undefined);
   }
 
-  React.useEffect(() => {
-    console.log('status', !['completed', 'failed'].includes(status?.status || ''));
-    setTaskInProgress(!['completed', 'failed'].includes(status?.status || 'completed'));
-  }, [status]);
 
   return <>
     {!status && null}

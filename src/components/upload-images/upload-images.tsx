@@ -16,6 +16,7 @@ interface IUploadImages {
 
 const UploadImages = ({ value, onChange, eventType }: IUploadImages) => {
     const uploadRef = React.createRef<UploadRef<UploadProps>>();
+    const [currentImages, setCurrentImages] = React.useState<TImage[]>(value);
 
     const [elementsInPage, setElementsInPage] = React.useState<TImage[]>([]);
     const [currentPage, setCurrentPage] = React.useState(1);
@@ -34,7 +35,7 @@ const UploadImages = ({ value, onChange, eventType }: IUploadImages) => {
                     file,
                 });
             }
-            onChange(_images);
+            onChange([..._images.sort((a, b) => Number(b.isEventPreview) - Number(a.isEventPreview))]);
             return false;
     };
 
@@ -67,6 +68,7 @@ const UploadImages = ({ value, onChange, eventType }: IUploadImages) => {
     };
 
     React.useEffect(() => {
+        setCurrentImages([...value.sort((a, b) => Number(b.isEventPreview) - Number(a.isEventPreview))]);
         onPaginationChange(currentPage, currentPageSize);
     }, [value]);
 
@@ -91,7 +93,7 @@ const UploadImages = ({ value, onChange, eventType }: IUploadImages) => {
                 </p>
             </Upload.Dragger>
 
-            <div className="flex flex-col gap-y-10 mt-6">
+            <div className="flex flex-col gap-y-5 mt-6">
                 {eventType === 'public' && !!value.length && <div className="flex flex-wrap flex-row gap-2 items-center justify-center">
                     <p className="basis-full text-center">Precio general</p>
                     <span>$</span>
@@ -110,6 +112,7 @@ const UploadImages = ({ value, onChange, eventType }: IUploadImages) => {
                           }
                     />
                 </div>}
+                <p className="text-center">Imágenes totales: {value.length}</p>
                 
 
                 {

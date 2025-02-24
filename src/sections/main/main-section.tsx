@@ -5,6 +5,7 @@ import { TEvent } from "../../types/types";
 import EventPreviewCard from "../../components/event-preview-card/event-preview-card";
 import { Collapse, Select, Skeleton } from "antd";
 import EventPreviewList from "../../components/event-preview-list/event-preview-list";
+import { s } from 'vite';
 
 type TQueryRecord = {
     [key: string]: {
@@ -49,10 +50,11 @@ interface IMainSection {
 const MainSection = ({ onUpdate, onDelete }: IMainSection) => {
     const [loading, setLoading] = React.useState(true);
     const [selectedFilter, setSelectedFilter] = React.useState<string>("");
-    const { events, setEvents } = useGlobal();
+    const { events, setEvents, shouldRefresh } = useGlobal();
     const { data, fetchData } = useService();
 
     React.useEffect(() => {
+        console.log('loading events again...');
         fetchData({
             api: "events",
             method: "GET",
@@ -61,7 +63,7 @@ const MainSection = ({ onUpdate, onDelete }: IMainSection) => {
                 "order": 'desc'
             },
         });
-    }, []);
+    }, [shouldRefresh]);
 
     React.useEffect(() => {
         console.log(data);

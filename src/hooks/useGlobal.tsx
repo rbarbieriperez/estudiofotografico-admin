@@ -20,7 +20,9 @@ type TGlobalContext = {
     events: TEvent[] | undefined;
     setEvents: React.Dispatch<React.SetStateAction<TEvent[] | undefined>>;
     taskInProgress: Boolean;
-    setTaskInProgress: React.Dispatch<React.SetStateAction<Boolean>>
+    setTaskInProgress: React.Dispatch<React.SetStateAction<Boolean>>;
+    shouldRefresh: Boolean;
+    setShouldRefresh: React.Dispatch<React.SetStateAction<Boolean>>;
 }
 
 const GlobalContext = React.createContext<TGlobalContext>({} as TGlobalContext);
@@ -32,6 +34,7 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
     const [loginData, setLoginData] = React.useState<TUserLoginData>();
     const [events, setEvents] = React.useState<TEvent[]>();
     const [taskInProgress, setTaskInProgress] = React.useState<Boolean>(false);
+    const [shouldRefresh, setShouldRefresh] = React.useState<Boolean>(false);
 
     /**
      * Show Toast
@@ -49,7 +52,7 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
 
     
     return (
-        <GlobalContext.Provider value={{ loading, setLoading, showToast, toast, closeToast, driveData, setDriveData, loginData, setLoginData, events, setEvents, taskInProgress, setTaskInProgress }}>
+        <GlobalContext.Provider value={{ loading, setLoading, showToast, toast, closeToast, driveData, setDriveData, loginData, setLoginData, events, setEvents, taskInProgress, setTaskInProgress, shouldRefresh, setShouldRefresh }}>
             {children}
         </GlobalContext.Provider>
     )

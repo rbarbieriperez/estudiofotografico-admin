@@ -4,6 +4,7 @@ import { Skeleton, Input, Checkbox, Tooltip } from "antd";
 import React from "react";
 import PrevisualizeImageModal from "../previsualize-image-modal/previsualize-image-modal";
 
+
 interface IUploadImagePreview {
     image: TImage;
     onDelete: () => void;
@@ -25,6 +26,9 @@ const UploadImagePreview = ({
 }: IUploadImagePreview) => {
     const [previsualizeOpened, setPrevisualizeOpened] = React.useState(false);
     const [imageSrc, setImageSrc] = React.useState<string | ArrayBuffer | null>(null);
+    const [imgLoaded, setImgLoaded] = React.useState(false);
+    const imgRef = React.useRef<HTMLImageElement>(null);
+    
 
     React.useEffect(() => {
         if (image && !image.webContentLink) {
@@ -36,6 +40,16 @@ const UploadImagePreview = ({
         }
     }, [image]);
 
+    React.useEffect(() => {
+        if (imgRef.current) {
+            imgRef.current.onload = () => {
+                console.log("img loaded");
+                imgRef.current?.classList.remove("hidden")
+                setImgLoaded(true);
+            };
+        }
+    }, []);
+
 
     return (
         <>
@@ -46,12 +60,16 @@ const UploadImagePreview = ({
                     <div className="flex gap-x-2">
                         <div className="flex items-start">
                             <img
+                                ref={imgRef}
                                 onClick={() => setPrevisualizeOpened(true)}
-                                className="w-12 cursor-pointer"
+                                className="w-12 cursor-pointer hidden"
                                 src={imageSrc as string || image.webContentLink}
                                 alt="Event image"
                                 referrerPolicy="no-referrer"
+                                
                             />
+
+                            <Skeleton active loading={!imgLoaded} />
                         </div>
                         <div className="flex flex-col gap-y-2">
                             <Input.TextArea
