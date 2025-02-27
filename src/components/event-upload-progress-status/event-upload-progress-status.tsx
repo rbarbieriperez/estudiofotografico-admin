@@ -27,6 +27,9 @@ const EventUploadProgressStatus = () => {
       if (['completed', 'failed'].includes(status?.status || '')) {
         setTaskInProgress(false);
         setShouldRefresh(true);
+      } else {
+        setTaskInProgress(true);
+        setShouldRefresh(false);
       }
     }
   }, []);

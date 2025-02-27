@@ -91,7 +91,7 @@ const DeleteEventSection = ({ eventType, shouldClose, eventToBeDeleted }: IDelet
 
   }, [data]);
 
-  return <section className="p-10 flex flex-col gap-y-4">
+  return <section className="p-10 flex flex-col gap-y-4 md:w-3/4 md:mx-auto">
     <ReturnArrow onClick={shouldClose}/>
     <h1 className="text-xl font-normal text-center">Eliminar evento {eventType === 'public' ? 'público' : 'privado' }</h1>
     <Form onFinish={handleSubmit} form={form}>

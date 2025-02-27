@@ -12,8 +12,8 @@ interface IEventPreviewCard {
 }
 
 const EventPreviewCard = ({ event, onDelete, onUpdate }: IEventPreviewCard) => {
-    return <div className="w-full flex flex-col p-6 gap-y-1 shadow-lg rounded-lg">
-        <img referrerPolicy='no-referrer' src={event.eventPreviewImage ? event.eventPreviewImage : noImage} alt="" />
+    return <div className="w-full flex flex-col p-6 gap-y-1 shadow-lg rounded-lg lg:w-[15rem]">
+        <img className=' m-auto' referrerPolicy='no-referrer' src={event.eventPreviewImage ? event.eventPreviewImage : noImage} alt="" />
         <span className='font-poppinsLight text-sm'>Evento: {event.name}</span>
         <span className='font-poppinsLight text-sm'>Fecha: {new Date(event.date).toLocaleDateString()}</span>
         <span className='font-poppinsLight text-sm'>Lugar: {event.city}, {event.department}, {event.country}</span>

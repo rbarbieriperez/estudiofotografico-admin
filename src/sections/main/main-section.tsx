@@ -51,9 +51,10 @@ const MainSection = ({ onUpdate, onDelete }: IMainSection) => {
     const [loading, setLoading] = React.useState(true);
     const [selectedFilter, setSelectedFilter] = React.useState<string>("");
     const { events, setEvents, shouldRefresh } = useGlobal();
-    const { data, fetchData } = useService();
+    const { data, fetchData } = useService(true);
 
     React.useEffect(() => {
+        if (!shouldRefresh) return;
         console.log('loading events again...');
         fetchData({
             api: "events",
@@ -93,7 +94,7 @@ const MainSection = ({ onUpdate, onDelete }: IMainSection) => {
     
 
     return (
-        <section className="mt-4 p-4 flex flex-col">
+        <section className="mt-4 p-4 flex flex-col md:w-3/4 md:mx-auto">
             {loading && <Skeleton active />}
 
             {!loading && events && <Collapse items={[

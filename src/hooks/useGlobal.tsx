@@ -34,7 +34,7 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
     const [loginData, setLoginData] = React.useState<TUserLoginData>();
     const [events, setEvents] = React.useState<TEvent[]>();
     const [taskInProgress, setTaskInProgress] = React.useState<Boolean>(false);
-    const [shouldRefresh, setShouldRefresh] = React.useState<Boolean>(false);
+    const [shouldRefresh, setShouldRefresh] = React.useState<Boolean>(true);
 
     /**
      * Show Toast

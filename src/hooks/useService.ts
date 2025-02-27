@@ -13,8 +13,12 @@ type TData = {
     data: unknown;
 };
 
-const useService = () => {
+const MAX_RETRIES = 3;
+
+const useService = (shouldRetry?: boolean) => {
     const [data, setData] = React.useState<TData>();
+    const [retries, setRetries] = React.useState(0);
+    const [fnParams, setFnParams] = React.useState<IUseService>();
 
     const fetchData = async ({
         api,
@@ -23,8 +27,10 @@ const useService = () => {
         headers = {},
         params = {},
     }: IUseService) => {
-        const token = sessionStorage.getItem("jwt");
+        setFnParams({ api, method, body, headers, params });
 
+
+        const token = sessionStorage.getItem("jwt");
         fetch(
             `http://localhost:3000/api/admin/${api}?${new URLSearchParams(
                 params
@@ -56,6 +62,16 @@ const useService = () => {
             });
         })
     };
+
+    React.useEffect(() => {
+        if (shouldRetry && retries < MAX_RETRIES && [400, 500].includes(data?.code || 0) && fnParams) {
+            fetchData(fnParams);
+            setRetries(retries + 1);
+        } else {
+            setRetries(0);
+            setFnParams(undefined);
+        }
+    }, [data]);
 
     return { data, fetchData };
 };

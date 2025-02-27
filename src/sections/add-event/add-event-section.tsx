@@ -84,7 +84,7 @@ const AddEventSection = ({ eventType, shouldClose }: IAddProductSection) => {
     }, [data]);
 
     return (
-        <section className="p-10 flex flex-col gap-y-4">
+        <section className="p-10 flex flex-col gap-y-4 md:w-3/4 md:mx-auto">
             <ReturnArrow onClick={shouldClose}/>
             <h1 className="text-xl font-normal">Crear evento {eventType === 'public' ? 'público' : 'privado' }</h1>
             <Form onFinish={handleSubmit} form={form} className="w-full gap-y-4" name="event-data-form" autoComplete="off">

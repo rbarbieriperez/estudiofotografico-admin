@@ -16,7 +16,7 @@ import DeleteEventSection from "./sections/delete-event/delete-event-section";
 type TSectionOption = 'main';
 
 const App = () => {
-    const { driveData, setDriveData } = useGlobal();
+    const { driveData, setDriveData, shouldRefresh } = useGlobal();
     const { data, fetchData } = useService();
     const [isLogged, setIsLogged] = React.useState<boolean>(false);
     const [menuOpened, setMenuOpened] = React.useState<boolean>(false);
@@ -33,7 +33,7 @@ const App = () => {
 
     React.useEffect(() => {
         console.log(driveData);
-        if (!driveData && isLogged) {
+        if (!driveData && isLogged && shouldRefresh) {
             fetchData({
                 api: 'catalogs/drive-status',
                 method: 'GET',
@@ -42,7 +42,7 @@ const App = () => {
                 }
             })
         }
-    }, [isLogged]);
+    }, [isLogged, shouldRefresh]);
 
     React.useEffect(() => {
         if (data?.code === 200) {

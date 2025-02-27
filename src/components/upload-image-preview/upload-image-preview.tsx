@@ -55,7 +55,7 @@ const UploadImagePreview = ({
         <>
             {!image && <Skeleton active />}
             {image && (
-                <div className={`flex flex-col w-full rounded-lg shadow-[0px_0px_6px_0px_rgba(0,_0,_0,_0.1)] p-4 ${isNewImage && "bg-gray-100 pt-1"}`}>
+                <div className={`flex flex-col w-full rounded-lg shadow-[0px_0px_6px_0px_rgba(0,_0,_0,_0.1)] p-4 max-w-[20rem] ${isNewImage && "bg-gray-100 pt-1"}`}>
                     {isNewImage && <p className="basis-full text-xs mb-2">Nueva</p>}
                     <div className="flex gap-x-2">
                         <div className="flex items-start">

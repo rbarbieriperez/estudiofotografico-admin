@@ -10,11 +10,11 @@ interface IUploadImages {
     value: TImage[];
     onChange: (images: TImage[]) => void;
     eventType: 'public' | 'private';
-
+    formType?: 'create' | 'update' | 'delete';
 }
 
 
-const UploadImages = ({ value, onChange, eventType }: IUploadImages) => {
+const UploadImages = ({ value, onChange, eventType, formType = 'create' }: IUploadImages) => {
     const uploadRef = React.createRef<UploadRef<UploadProps>>();
     const [currentImages, setCurrentImages] = React.useState<TImage[]>(value);
 
@@ -74,7 +74,7 @@ const UploadImages = ({ value, onChange, eventType }: IUploadImages) => {
 
     return (
         <>
-            <Upload.Dragger
+            { formType !== 'delete' ? <Upload.Dragger
                 ref={uploadRef}
                 name="event-pictures"
                 listType="picture-card"
@@ -91,10 +91,10 @@ const UploadImages = ({ value, onChange, eventType }: IUploadImages) => {
                 <p className="ant-upload-text">
                     Clic o arrastra para subir
                 </p>
-            </Upload.Dragger>
+            </Upload.Dragger> : null}
 
             <div className="flex flex-col gap-y-5 mt-6">
-                {eventType === 'public' && !!value.length && <div className="flex flex-wrap flex-row gap-2 items-center justify-center">
+                {eventType === 'public' && !!value.length && formType !== 'delete' && <div className="flex flex-wrap flex-row gap-2 items-center justify-center">
                     <p className="basis-full text-center">Precio general</p>
                     <span>$</span>
                     <Input
@@ -104,7 +104,7 @@ const UploadImages = ({ value, onChange, eventType }: IUploadImages) => {
                         onChange={handleSetGeneralPrice}
                         defaultValue={0}
                         min={0}
-
+                        style={{ maxWidth: 120 }}
                         suffix={
                             <Tooltip title="El precio general se aplica a todas las imagenes.">
                               <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
@@ -112,23 +112,25 @@ const UploadImages = ({ value, onChange, eventType }: IUploadImages) => {
                           }
                     />
                 </div>}
-                <p className="text-center">Imágenes totales: {value.length}</p>
+                { formType !== 'delete' && <p className="text-center">Imágenes totales: {value.length}</p>}
                 
-
-                {
-                    Array.isArray(elementsInPage) && !!elementsInPage.length ? elementsInPage.map((image, index) => (
-                        <UploadImagePreview
-                        eventType={eventType}
-                        key={index}
-                        image={image}
-                        selectPrevisualizeEnabled={!value.find((img) => img.isEventPreview) || image.isEventPreview}
-                        onDelete={() => handleDelete(index)}
-                        onUpdate={(img) => handleUpdate(img, index)}
-                        isNewImage={image.isNewImage}
-                        />
-                    )
-                ) : null}
-                <Pagination responsive onChange={onPaginationChange} total={value.length} current={currentPage} pageSize={currentPageSize} pageSizeOptions={[10, 20, 30, 40, 50]}/>
+                <div className="flex flex-wrap flex-row gap-5 w-full justify-center">
+                    {
+                        Array.isArray(elementsInPage) && !!elementsInPage.length ? elementsInPage.map((image, index) => (
+                            <UploadImagePreview
+                            mode={formType === 'delete' ? 'view' : 'edit'}
+                            eventType={eventType}
+                            key={index}
+                            image={image}
+                            selectPrevisualizeEnabled={!value.find((img) => img.isEventPreview) || image.isEventPreview}
+                            onDelete={() => handleDelete(index)}
+                            onUpdate={(img) => handleUpdate(img, index)}
+                            isNewImage={image.isNewImage}
+                            />
+                        )
+                    ) : null}
+                </div>
+                <Pagination style={{ margin: '2rem auto'}} responsive onChange={onPaginationChange} total={value.length} current={currentPage} pageSize={currentPageSize} pageSizeOptions={[10, 20, 30, 40, 50]}/>
             </div>
         </>
     );

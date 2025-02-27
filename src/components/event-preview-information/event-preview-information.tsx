@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { TEvent, TEventRaw, TImage } from "../../types/types";
-import UploadImagePreview from "../upload-image-preview/upload-image-preview";
+import UploadImages from "../upload-images/upload-images";
 
 interface IEventPreviewInformation {
     event: TEvent;
@@ -22,9 +22,7 @@ const EventPreviewInformation = ({ event, images }: IEventPreviewInformation) =>
 
       <div>
           <p className="text-center font-poppinsBold!">Imagenes</p>
-          { images.map((image, index) => <div className="flex mt-4" key={`image-${index}`}>
-              <UploadImagePreview eventType={"public"} mode="view" image={image} onDelete={() => {}} onUpdate={() => {}} selectPrevisualizeEnabled={false}/>
-          </div>) }
+          <UploadImages formType="delete" value={images} onChange={() => {}} eventType={'public'} />
       </div>
   </div>
 };

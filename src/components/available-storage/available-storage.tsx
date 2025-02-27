@@ -20,11 +20,13 @@ const AvailableStorage = () => {
             <span className='font-poppinsBold text-sm basis-full'>Almacenamiento en Drive</span>
             <span className='font-poppinsLight text-xs basis-full'>Cuenta: {loginData?.email}</span>
             <Progress status={percent > 80 ? 'exception' : 'normal'} percent={Number(percent.toFixed(2))} />
-            <span className='font-poppinsLight text-xs'>Usado: {driveData?.usage.toFixed(2)} GB</span>
-            <span className='font-poppinsLight text-xs'>Disponible: {driveData?.availableSpace.toFixed(2)} GB</span>
-            <span className='font-poppinsLight text-xs'>Limite: {driveData?.limit.toFixed(2)} GB</span>
-            {percent > 80 && percent < 100 && <span className='font-poppinsLight mt-2 basis-full text-xs text-red-500'>Tu almacenamiento esta por llenarse, considera eliminar eventos para liberar espacio.</span>}
-            {percent === 100 && <span className='font-poppinsLight mt-2 basis-full text-xs text-red-500'>Tu almacenamiento esta lleno, elimina eventos para liberar espacio.</span>}
+            <div className='md:flex md:flex-col'>
+                <span className='font-poppinsLight text-xs'>Usado: {driveData?.usage.toFixed(2)} GB</span>
+                <span className='font-poppinsLight text-xs'>Disponible: {driveData?.availableSpace.toFixed(2)} GB</span>
+                <span className='font-poppinsLight text-xs'>Limite: {driveData?.limit.toFixed(2)} GB</span>
+                {percent > 80 && percent < 100 && <span className='font-poppinsLight mt-2 basis-full text-xs text-red-500'>Tu almacenamiento esta por llenarse, considera eliminar eventos para liberar espacio.</span>}
+                {percent === 100 && <span className='font-poppinsLight mt-2 basis-full text-xs text-red-500'>Tu almacenamiento esta lleno, elimina eventos para liberar espacio.</span>}
+            </div>
         </div>
     );
 }

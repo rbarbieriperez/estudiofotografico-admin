@@ -45,13 +45,15 @@ const EventPreviewList = ({
     onUpdate
 }: IEventPreviewList) => {
     return (
-        <div className="flex flex-col items-center gap-y-4">
-            <Select
-                options={orderOptions}
-                defaultValue={filterSelected ? filterSelected : orderOptions[1].value}
-                onChange={onSelectedFilter}
-                disabled={!events.length}
-            />
+        <div className="flex items-center flex-col gap-y-4 lg:flex-wrap lg:gap-x-10 lg:flex-row">
+            <div className="w-full basis-full text-center">
+                <Select
+                    options={orderOptions}
+                    defaultValue={filterSelected ? filterSelected : orderOptions[1].value}
+                    onChange={onSelectedFilter}
+                    disabled={!events.length}
+                />
+            </div>
             {
                 !!events.length &&
                 events.map((event, index) => (
