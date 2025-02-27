@@ -1,7 +1,7 @@
 import { Button, Form, Popconfirm, Skeleton } from "antd";
 import EventSelect from "../../components/events-select/events-select";
 import { useGlobal } from "../../hooks/useGlobal";
-import { TEvent, TEventRaw, TImage } from "../../types/types";
+import { TEvent, TImage } from "../../types/types";
 import FormItem from "antd/es/form/FormItem";
 import React from "react";
 import useService from "../../hooks/useService";

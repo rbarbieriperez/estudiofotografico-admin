@@ -97,7 +97,7 @@ const UpdateEventSection = ({
         }
     }, [data]);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async () => {
         try {
             if (!event) return;
             setLoading(true);

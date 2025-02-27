@@ -1,4 +1,3 @@
-import React from "react";
 import { TEventRaw, TFile, TImage } from "../../types/types";
 import CountriesSelect from "../countries-select/countries-select";
 import DepartmentsSelect from "../departments-select/departments-select";

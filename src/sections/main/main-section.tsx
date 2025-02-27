@@ -2,10 +2,8 @@ import React from "react";
 import { useGlobal } from "../../hooks/useGlobal";
 import useService from "../../hooks/useService";
 import { TEvent } from "../../types/types";
-import EventPreviewCard from "../../components/event-preview-card/event-preview-card";
-import { Collapse, Select, Skeleton } from "antd";
+import { Collapse, Skeleton } from "antd";
 import EventPreviewList from "../../components/event-preview-list/event-preview-list";
-import { s } from 'vite';
 
 type TQueryRecord = {
     [key: string]: {

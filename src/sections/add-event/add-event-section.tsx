@@ -51,7 +51,7 @@ const AddEventSection = ({ eventType, shouldClose }: IAddProductSection) => {
         return formData;
     }
 
-    const handleSubmit = async (event: React.FormEvent) => {
+    const handleSubmit = async () => {
         try {
             if (!eventData) return;
             setLoading(true);

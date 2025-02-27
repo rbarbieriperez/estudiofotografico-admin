@@ -1,7 +1,7 @@
 import React from "react"
-import { TDriveData, TEvent, TUserLoginData } from "./types/types";
+import { TDriveData, TEvent } from "./types/types";
 import LoginPage from "./pages/login/login-page";
-import { GlobalProvider, useGlobal } from "./hooks/useGlobal";
+import { useGlobal } from "./hooks/useGlobal";
 import Spinner from "./components/spinner/spinner";
 import Toast from "./components/toast/toast";
 import MainSection from "./sections/main/main-section";
@@ -12,8 +12,6 @@ import AddEventSection from "./sections/add-event/add-event-section";
 import UpdateEventSection from "./sections/update-event/update-event-section";
 import DeleteEventSection from "./sections/delete-event/delete-event-section";
 
-
-type TSectionOption = 'main';
 
 const App = () => {
     const { driveData, setDriveData, shouldRefresh } = useGlobal();

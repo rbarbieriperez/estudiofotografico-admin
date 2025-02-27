@@ -16,13 +16,13 @@ interface IUploadImages {
 
 const UploadImages = ({ value, onChange, eventType, formType = 'create' }: IUploadImages) => {
     const uploadRef = React.createRef<UploadRef<UploadProps>>();
-    const [currentImages, setCurrentImages] = React.useState<TImage[]>(value);
+    //const [currentImages, setCurrentImages] = React.useState<TImage[]>(value);
 
     const [elementsInPage, setElementsInPage] = React.useState<TImage[]>([]);
     const [currentPage, setCurrentPage] = React.useState(1);
     const [currentPageSize, setCurrentPageSize] = React.useState(10);
 
-    const handleChange = async (file: RcFile, fileList: RcFile[]) => {
+    const handleChange = async (_: RcFile, fileList: RcFile[]) => {
             console.log('handleChange', fileList);
             const _images: TImage[] = [...value];
             for (const file of fileList) {
@@ -65,10 +65,11 @@ const UploadImages = ({ value, onChange, eventType, formType = 'create' }: IUplo
         const imagesToBeShown = value.slice((page - 1) * pageSize, page * pageSize);
         setCurrentPage(page);
         setElementsInPage(imagesToBeShown);
+        setCurrentPageSize(pageSize);
     };
 
     React.useEffect(() => {
-        setCurrentImages([...value.sort((a, b) => Number(b.isEventPreview) - Number(a.isEventPreview))]);
+        //setCurrentImages([...value.sort((a, b) => Number(b.isEventPreview) - Number(a.isEventPreview))]);
         onPaginationChange(currentPage, currentPageSize);
     }, [value]);
 

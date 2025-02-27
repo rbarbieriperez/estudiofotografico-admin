@@ -1,4 +1,3 @@
-import React from 'react';
 import noImage from '../../images/event-mock-image.png';
 import { TEvent } from "../../types/types";
 import Icon, { DeleteOutlined, EditOutlined } from '@ant-design/icons';

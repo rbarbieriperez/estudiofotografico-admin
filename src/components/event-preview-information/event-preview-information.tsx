@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { TEvent, TEventRaw, TImage } from "../../types/types";
+import { TEvent, TImage } from "../../types/types";
 import UploadImages from "../upload-images/upload-images";
 
 interface IEventPreviewInformation {
