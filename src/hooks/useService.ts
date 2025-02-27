@@ -32,7 +32,7 @@ const useService = (shouldRetry?: boolean) => {
 
         const token = sessionStorage.getItem("jwt");
         fetch(
-            `http://localhost:3000/api/admin/${api}?${new URLSearchParams(
+            `${import.meta.env.VITE_API_URL}/api/admin/${api}?${new URLSearchParams(
                 params
             ).toString()}`,
             {
