@@ -39,7 +39,7 @@ const useService = (shouldRetry?: boolean) => {
                 method,
                 headers: {
                     ...headers,
-                    ...({Authorization: `Bearer ${token}`}),
+                    ...({Authorization: `${token}`}),
                 },
                 //body: JSON.stringify(body),
                 body: body as unknown as any
